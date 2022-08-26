@@ -30,6 +30,8 @@ Os prefixo podem ser:
 - `bug`: Corrige algum bug do código.
 - `style`: Adiciona/modifica estilização do CSS.
 - `format`: Corrige formatação/estilo/identação do código.
+- `package`: Adição/remoção de pacotes/dependências.
+- `admin`: Modificação de arquivos de configuração e READMEs.
 
 Me passem sugestões de prefixos caso tenham! 
 
