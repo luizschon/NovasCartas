@@ -3,15 +3,15 @@
 Projeto final da disciplina de Projeto e Análise de Algoritmo (PAA-2022/1) da Universidade de Brasília.
 
 ## Intergrantes
--
--
--
--
--
--
--
--
--
+- Alexsander Correa de Oliveira – mat **190023562**
+- Fernanda Macedo de Sousa – mat **170010058**
+- Gustavo Tomás de Paula – mat **190014148**
+- Jonas Soares Rnagel – mat **170146804**
+- Luiz Carlos Schonarth Junior – mat **190055171**
+- Marco Antônio Athayde – mat **180126814**
+- Mateus de Paula Rodrigues – mat **190017953**
+- Rafael Henrique Nogalha de Lima – mat **190036966**
+- Tong Zhou – mat **190038764**
 
 ## Pré-requisitos
 - Node `>= v16.0.0` (preferencialmente a versão *lts v16.17.0*)
