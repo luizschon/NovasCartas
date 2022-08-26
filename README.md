@@ -39,7 +39,8 @@ Me passem sugestões de prefixos caso tenham!
 
 Quando for criar novas features, consertar bugs, modificar configurações do projeto e etc. lembre-se de criar uma nova branch nomeá-la seguindo o padrão `<prefixo>-<nome-da-branch>` usando '-' como separador entre palavras, como por exemplo `feature-adiciona-usuarios`.
 
-Os prefixos são os mesmos da lista da seç
+Os prefixos são os mesmos da lista da seção anterior.
+
 
 ### Pull-requests
 
@@ -53,7 +54,7 @@ Siga o template que aparece quando você cria um pull-request, usando os mesmos 
 
 ## Rodando o projeto
 
-Assegure-se de que os pré-requisitos são antendidos no seu computador, dê uma olhada nas [recomendações](##recomendações) caso precise configurar seu ambiente de desenvolvimento. 
+Assegure-se de que os pré-requisitos são antendidos no seu computador, dê uma olhada nas [recomendações](#recomendações) caso precise configurar seu ambiente de desenvolvimento. 
 
 Antes de rotar o projeto, é necessário instalar as **dependências do projeto**. Em um terminal e dentro do diretório raiz do projeto, digite:
 
@@ -105,7 +106,7 @@ Agore que o nvm está instalado, instale e ative a versão do node recomendada:
 nvm install 16.17.0 && nvm use 16.17.0
 ```
 
-E fim! Você está pronto para desenvolver o projeto, fique a vontade para seguir as [instruções de execução](##rodando-o-projeto) para rodar o projeto, caso queira ignorar as outras recomendações :(.
+E fim! Você está pronto para desenvolver o projeto, fique a vontade para seguir as [instruções de execução](#rodando-o-projeto) para rodar o projeto, caso queira ignorar as outras recomendações :(.
 
 ### Extensões do VSCode pra quem curte
 
