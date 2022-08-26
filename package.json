@@ -1,0 +1,16 @@
+{
+  "name": "novas-cartas",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
+    "postinstall": "(cd frontend && npm install) && (cd backend && npm install)"
+  },
+  "dependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
