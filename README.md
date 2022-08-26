@@ -61,7 +61,7 @@ Após instalar as dependências, rode o *frontend* e o *backend* da aplicação 
 npm run dev
 ```
 
-Para rodar o *frontend* ou o *backend* separadamente, se refira aos README's do [front](../blob/develop/frontend/README.md) e do [back](../blob/develop/backend/README.md) respectivamente.
+Para rodar o *frontend* ou o *backend* separadamente, se refira aos README's do [front](frontend/README.md) e do [back](backend/README.md) respectivamente.
 
 ## Recomendações
 
@@ -101,6 +101,6 @@ nvm install 16.17.0 && nvm use 16.17.0
 
 E fim! Você está pronto para desenvolver o projeto, fique a vontade para seguir as [instruções de execução](##rodando-o-projeto) para rodar o projeto, caso queira ignorar as outras recomendações :(.
 
-###Extensões do VSCode pra quem curte
+### Extensões do VSCode pra quem curte
 
 TO-DO, tô com preguiça e quero dar push nesse repositório.
