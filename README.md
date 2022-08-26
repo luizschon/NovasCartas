@@ -35,6 +35,12 @@ Os prefixo podem ser:
 
 Me passem sugestões de prefixos caso tenham! 
 
+### Branches
+
+Quando for criar novas features, consertar bugs, modificar configurações do projeto e etc. lembre-se de criar uma nova branch nomeá-la seguindo o padrão `<prefixo>-<nome-da-branch>` usando '-' como separador entre palavras, como por exemplo `feature-adiciona-usuarios`.
+
+Os prefixos são os mesmos da lista da seç
+
 ### Pull-requests
 
 Toda vez que uma modificação for feita no repositório (um conjunto de commit para um objetivo comum, como implementar uma feature), um pull-request deve ser criado para dar do seu código na branch `develop`. Em caso de conflitos, tente corrigir eles de maneira sábia, pra não nukar o código do amiguinho.
