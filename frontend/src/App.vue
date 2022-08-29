@@ -1,31 +1,49 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div id="page-title">
+    <h1>NovasCartas</h1>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div id="news-grid">
+    <SearchBar id="search-bar" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+  </div>
 </template>
 
+<script setup>
+  import NewsCard from './components/NewsCard.vue';
+  import SearchBar from './components/SearchBar.vue';
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+  #page-title {
+    width: 100%;
+    margin: 100px auto 50px auto;
+  }
+  #news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    border-radius: 10px;
+    margin: 50px auto 250px auto;
+    width: 90%;
+    max-width: 1000px;
+  }
+  #search-bar {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
 </style>
