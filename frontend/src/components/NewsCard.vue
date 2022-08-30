@@ -1,8 +1,8 @@
 <template>
-  <div class="card">
-    <h2>{{ title }}</h2>
-    <p>{{ msg }}</p>
-    <p id="date">{{ date }}</p>
+  <div class="card" v-if="news">
+    <h2>{{ news.title }}</h2>
+    <p>{{ news.description }}</p>
+    <p id="date">{{ news.date }}</p>
   </div>
 </template>
 
@@ -10,9 +10,7 @@
   export default {
     name: "NewsCard",
     props: {
-      title: String,
-      msg: String,
-      date: String
+      news: null,
     },
   };
 </script>
