@@ -4,28 +4,37 @@
   </div>
   <div id="news-grid">
     <SearchBar id="search-bar" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
-    <NewsCard title="The best hip-hop hits" msg="This is a certified hood classic" date="12/04/2022" />
+    <NewsCard
+      v-for="news in newsList"
+      :key="news.id"
+      :news="news"
+    />
   </div>
 </template>
 
 <script setup>
   import NewsCard from './components/NewsCard.vue';
   import SearchBar from './components/SearchBar.vue';
+  import { getNews } from './api/news.js';
+</script>
+
+<script>
+  export default {
+    data() {
+      return {
+        newsList: [],
+      }
+    },
+    // Exemplo de uso das funções da api
+    async mounted() {
+      try {
+        const res = await getNews();
+        this.newsList = res.data
+      } catch(err) {
+        console.error(err);    // Deu errado
+      }
+    }
+  }
 </script>
 
 <style scoped>
