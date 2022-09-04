@@ -2,16 +2,22 @@ import { XMLParser } from 'fast-xml-parser';
 import fetch from 'node-fetch';
 
 const xml = new XMLParser();
-const dec = new TextDecoder('ISO-8859-1');
 
 // Função que recebe URL de um RSS de um site de noticias e 
 // interpreta XML como objeto JavaScript
 export async function parseXMLfromURL(url) {
   const res = await fetch(url);
-  const xmlStringData = dec.decode(await res.arrayBuffer());
-  const obj = xml.parse(xmlStringData);
 
-  return obj.rss.channel;
+  // Captura charset usado no XML
+  const charsetStr = res.headers.get('content-type');
+  const regexp = new RegExp('charset=(.*)', 'g');
+  const match = regexp.exec(charsetStr);
+
+  // Decodifica texto da resposta usando charset da resposta
+  // (UTF-8/ISO-8859-1) e interpreta XML como Object
+  const dec = new TextDecoder(match[1]);
+  const xmlStringData = dec.decode(await res.arrayBuffer());
+  return xml.parse(xmlStringData).rss.channel;
 }
 
 // Função que filtra informações relevantes do array de
