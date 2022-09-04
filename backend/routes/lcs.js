@@ -1,5 +1,4 @@
 const express = require('express');
-// const JSON = require("nodemon/lib/utils");
 const router = express.Router();
 
 // Calcula comprimento da subsequência mais longa comum entre duas sequências.
@@ -29,7 +28,7 @@ const LCS = function (seq0, seq1, n, m) {
             }
         }
     }
-    console.log(C[n][m]);
+
     return C[n][m];
 }
 
