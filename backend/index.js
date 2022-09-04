@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const news = require('./routes/news')
+const lcs = require('./routes/lcs')
 
 app.use(cors())
 
@@ -14,6 +15,8 @@ app.get('/', (_req, res) => {
 })
 
 app.use('/news', news)
+
+app.use('/lcstest', lcs);
 
 app.listen(port, () => {
   console.log(`Novas Cartas listening on port ${port}`)
