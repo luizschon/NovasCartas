@@ -3,7 +3,6 @@
     <h1>NovasCartas</h1>
   </div>
   <div id="news-grid">
-    <SearchBar id="search-bar" />
     <NewsCard
       v-for="news in newsList"
       :key="news.id"
@@ -14,7 +13,6 @@
 
 <script setup>
   import NewsCard from './components/NewsCard.vue';
-  import SearchBar from './components/SearchBar.vue';
   import { getNews } from './api/news.js';
 </script>
 
@@ -46,13 +44,10 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    row-gap: 15px;
     border-radius: 10px;
     margin: 50px auto 250px auto;
     width: 90%;
     max-width: 1000px;
-  }
-  #search-bar {
-    grid-column-start: 1;
-    grid-column-end: 4;
   }
 </style>
