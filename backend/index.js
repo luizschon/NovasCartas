@@ -1,7 +1,8 @@
-const express = require('express')
-const cors = require('cors')
+import express from 'express';
+import cors from 'cors';
+import NewsRouter from './routes/news.js';
+
 const app = express()
-const news = require('./routes/news')
 
 app.use(cors())
 
@@ -13,7 +14,7 @@ app.get('/', (_req, res) => {
   res.send('Hello World!')
 })
 
-app.use('/news', news)
+app.use('/news', NewsRouter)
 
 app.listen(port, () => {
   console.log(`Novas Cartas listening on port ${port}`)
