@@ -15,7 +15,7 @@
         <p class="date">{{ news.date }}</p>
       </div>
     </div>
-    <a :href=news.url target="_blank" id="news-source">{{ news.url }}</a>
+    <a :href=news.url target="_blank" id="news-source">{{ news.source }}</a>
   </div>
 </template>
 
@@ -82,6 +82,7 @@
   }
   #news-source {
     width: fit-content;
+    padding: 0 0.5rem;
   }
   a {
     text-decoration: none;

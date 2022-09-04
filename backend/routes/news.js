@@ -4,7 +4,7 @@ import { getNews } from '../models/news.js';
 const router = express.Router();
 
 router.get("/", async (_req, res) => {
-  const news = await getNews('http://rss.uol.com.br/feed/noticias.xml');
+  const news = await getNews('https://feeds.bbci.co.uk/portuguese/rss.xml');
   res.json(news)
 })
 

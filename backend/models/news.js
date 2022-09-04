@@ -26,7 +26,8 @@ export function filterNewsInfo(newsObj) {
   return newsObj.item.map((news) => ({
     id: Math.random() * 100000,
     title: news.title,
-    link: news.link,
+    url: news.link,
+    source: newsObj.title,
     description: news.description,
     date: news.pubDate,
   }));
