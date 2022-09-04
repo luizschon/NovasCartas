@@ -1,31 +1,53 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div id="page-title">
+    <h1>NovasCartas</h1>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div id="news-grid">
+    <NewsCard
+      v-for="news in newsList"
+      :key="news.id"
+      :news="news"
+    />
+  </div>
 </template>
 
+<script setup>
+  import NewsCard from './components/NewsCard.vue';
+  import { getNews } from './api/news.js';
+</script>
+
+<script>
+  export default {
+    data() {
+      return {
+        newsList: [],
+      }
+    },
+    // Exemplo de uso das funções da api
+    async mounted() {
+      try {
+        const res = await getNews();
+        this.newsList = res.data
+      } catch(err) {
+        console.error(err);    // Deu errado
+      }
+    }
+  }
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+  #page-title {
+    width: 100%;
+    margin: 100px auto 50px auto;
+  }
+  #news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    row-gap: 15px;
+    border-radius: 10px;
+    margin: 50px auto 250px auto;
+    width: 90%;
+    max-width: 1000px;
+  }
 </style>

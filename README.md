@@ -3,15 +3,15 @@
 Projeto final da disciplina de Projeto e Análise de Algoritmo (PAA-2022/1) da Universidade de Brasília.
 
 ## Intergrantes
--
--
--
--
--
--
--
--
--
+- Alexsander Correa de Oliveira – mat **190023562**
+- Fernanda Macedo de Sousa – mat **170010058**
+- Gustavo Tomás de Paula – mat **190014148**
+- Jonas Soares Rnagel – mat **170146804**
+- Luiz Carlos Schonarth Junior – mat **190055171**
+- Marco Antônio Athayde – mat **180126814**
+- Mateus de Paula Rodrigues – mat **190017953**
+- Rafael Henrique Nogalha de Lima – mat **190036966**
+- Tong Zhou – mat **190038764**
 
 ## Pré-requisitos
 - Node `>= v16.0.0` (preferencialmente a versão *lts v16.17.0*)
@@ -35,6 +35,13 @@ Os prefixo podem ser:
 
 Me passem sugestões de prefixos caso tenham! 
 
+### Branches
+
+Quando for criar novas features, consertar bugs, modificar configurações do projeto e etc. lembre-se de criar uma nova branch nomeá-la seguindo o padrão `<prefixo>-<nome-da-branch>` usando '-' como separador entre palavras, como por exemplo `feature-adiciona-usuarios`.
+
+Os prefixos são os mesmos da lista da seção anterior.
+
+
 ### Pull-requests
 
 Toda vez que uma modificação for feita no repositório (um conjunto de commit para um objetivo comum, como implementar uma feature), um pull-request deve ser criado para dar do seu código na branch `develop`. Em caso de conflitos, tente corrigir eles de maneira sábia, pra não nukar o código do amiguinho.
@@ -47,7 +54,7 @@ Siga o template que aparece quando você cria um pull-request, usando os mesmos 
 
 ## Rodando o projeto
 
-Assegure-se de que os pré-requisitos são antendidos no seu computador, dê uma olhada nas [recomendações](##recomendações) caso precise configurar seu ambiente de desenvolvimento. 
+Assegure-se de que os pré-requisitos são antendidos no seu computador, dê uma olhada nas [recomendações](#recomendações) caso precise configurar seu ambiente de desenvolvimento. 
 
 Antes de rotar o projeto, é necessário instalar as **dependências do projeto**. Em um terminal e dentro do diretório raiz do projeto, digite:
 
@@ -61,7 +68,7 @@ Após instalar as dependências, rode o *frontend* e o *backend* da aplicação 
 npm run dev
 ```
 
-Para rodar o *frontend* ou o *backend* separadamente, se refira aos README's do [front](../blob/develop/frontend/README.md) e do [back](../blob/develop/backend/README.md) respectivamente.
+Para rodar o *frontend* ou o *backend* separadamente, se refira aos README's do [front](frontend/README.md) e do [back](backend/README.md) respectivamente.
 
 ## Recomendações
 
@@ -99,8 +106,8 @@ Agore que o nvm está instalado, instale e ative a versão do node recomendada:
 nvm install 16.17.0 && nvm use 16.17.0
 ```
 
-E fim! Você está pronto para desenvolver o projeto, fique a vontade para seguir as [instruções de execução](##rodando-o-projeto) para rodar o projeto, caso queira ignorar as outras recomendações :(.
+E fim! Você está pronto para desenvolver o projeto, fique a vontade para seguir as [instruções de execução](#rodando-o-projeto) para rodar o projeto, caso queira ignorar as outras recomendações :(.
 
-###Extensões do VSCode pra quem curte
+### Extensões do VSCode pra quem curte
 
 TO-DO, tô com preguiça e quero dar push nesse repositório.
