@@ -1,5 +1,5 @@
-import express from 'express';
-import { getNews } from '../models/news.js';
+const express = require('express');
+const { getNews } = require('../models/news.js')
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ router.get("/", async (_req, res) => {
   res.json(news)
 })
 
-export default router;
+module.exports = router;
