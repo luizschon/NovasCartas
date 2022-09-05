@@ -1,6 +1,6 @@
-import express from 'express';
-import cors from 'cors';
-import NewsRouter from './routes/news.js';
+const express = require('express');
+const cors = require('cors');
+const NewsRouter = require('./routes/news.js');
 
 const app = express()
 
