@@ -40,6 +40,10 @@
 <style scoped>
   .card-container {
     height: fit-content;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    break-inside: avoid;
+    margin-bottom: 20px;
   }
   .card {
     display: flex;
@@ -83,6 +87,7 @@
   #news-source {
     width: fit-content;
     padding: 0 0.5rem;
+    margin: auto;
   }
   a {
     text-decoration: none;
