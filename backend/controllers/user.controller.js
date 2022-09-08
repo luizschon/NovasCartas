@@ -74,9 +74,3 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
 
 }
-
-// Retorna todos os usuários ativos
-exports.findAllActive = (req, res) => {
-
-}
-
