@@ -34,9 +34,35 @@ app.get('/script', (_req, res) => {
   });
 })
 
-app.use('/news', NewsRouter)
+// Testa troca de objetos JSON entre Node e o processo Python.
+app.get('/test_pyjson', (_req, res) => {
+ 
+  let dataFromPython = "No data received";
 
-app.use('/lcstest', lcs);
+  let input = {
+    "docs": [
+      ["the", "sky", "is", "blue"],
+      ["the", "sun", "is", "bright"],
+      ["the", "sun", "in", "the", "sky", "is", "bright"],
+      ["we", "can", "see", "the", "shining", "sun", "the", "bright", "sun"]
+    ]
+}
+ 
+  // Cria processo filho como script de python
+  const python = spawn('python3', ['../frontend/src/python/test_pyjson.py', JSON.stringify(input)]);
+  python.stdout.on('data', (data) => {
+    dataFromPython = data.toString();
+  });
+
+  // Manda resultado para a rota escolhida quando o script terminar de rodar
+  python.on('close', (code) => {
+    console.log("Code:", code);
+    dataFromPythonJson = JSON.parse(dataFromPython);
+    res.send(dataFromPythonJson);
+  });
+})
+
+app.use('/news', NewsRouter)
 
 app.listen(port, () => {
   console.log(`Novas Cartas listening on port ${port}`)
