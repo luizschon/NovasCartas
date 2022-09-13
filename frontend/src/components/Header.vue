@@ -18,25 +18,22 @@ export default {
 </script>
   
 <style scoped>
-#page-title {
-  width: 100%;
-  margin: 50px auto;
-}
 
 .header-outer {
   display: flex;
   align-items: center;
   justify-content: center;
   position: sticky;
-  height: 10rem;
-  top: calc(5rem - 10rem);
+  height: 12rem;
+  top: calc(9rem - 12rem);
 }
 
 .header-inner {
-  height: 5rem;
+  width: 100%;
+  height: 9rem;
   position: sticky;
   top: 0;
-  background-image: linear-gradient(var(--background-color-primary) 90%, transparent);
+  background-image: linear-gradient(var(--background-color-primary) 75%, transparent);
 }
 
 #nav {
@@ -50,11 +47,13 @@ a {
   transition-duration: 0.4s;
   padding: 7px 10px;
 }
+
 a:hover {
   transition: all;
   transition-duration: 0.3s;
   background-color: var(--background-color-secondary);
   border-radius: 7px;
 }
+
 </style>
   
