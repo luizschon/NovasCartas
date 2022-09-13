@@ -41,8 +41,7 @@
     margin: 100px auto 50px auto;
   }
   #news-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    column-count: 3;
     gap: 10px;
     row-gap: 15px;
     border-radius: 10px;
