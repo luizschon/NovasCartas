@@ -1,7 +1,4 @@
 <template>
-  <div id="page-title">
-    <h1>NovasCartas</h1>
-  </div>
   <div id="news-grid">
     <NewsCard v-for="news in newsList" :key="news.id" :news="news" />
   </div>
@@ -32,11 +29,6 @@ export default {
 </script>
 
 <style scoped>
-#page-title {
-  width: 100%;
-  margin: 100px auto 50px auto;
-}
-
 #news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

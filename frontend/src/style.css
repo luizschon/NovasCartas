@@ -43,6 +43,6 @@ h1 {
 
 #app {
   width: 100vw;
-  margin: 0 auto;
+  min-height: 100vh;
   text-align: center;
 }

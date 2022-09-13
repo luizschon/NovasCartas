@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import News from "../views/News.vue";
@@ -22,9 +22,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  //   history: createWebHistory(import.meta.env.BASE_URL),
-  history: createWebHashHistory(),
-  routes: routes,
+  history: createWebHistory(),
+  // history: createWebHashHistory(),
+  routes,
 });
 
 export default router;
