@@ -1,5 +1,4 @@
 <template>
-  <Header />
   <!-- <h2>Cadastrar</h2> -->
   <form action="" method="get" class="form-login">
     <div class = "form-e-prefs">
@@ -41,7 +40,7 @@
 </template>
 
 <script setup>
- import Header from '../components/Header.vue';
+  
 </script>
 
 <style scoped>

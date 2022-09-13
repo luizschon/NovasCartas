@@ -1,5 +1,4 @@
 <template>
-  <Header />
   <form action="" method="get" class="form-login">
     <div class="container">
       <div class="form-and-check">
@@ -26,7 +25,7 @@
 </template>
 
 <script setup>
-import Header from '../components/Header.vue';
+
 </script>
 
 <style scoped>
