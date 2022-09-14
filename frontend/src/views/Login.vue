@@ -1,85 +1,123 @@
 <template>
-  <form action="" method="get" class="form-login">
-    <div class="container">
-      <div class="form-and-check">
-        <div class="form-content">
-          <div class="form-field">
-            <label for="name">Nome de Usuário</label>
-            <input type="text" name="name" id="name" required>
-          </div>
-          <div class="form-field">
-            <label for="password">Senha</label>
-            <input type="password" name="password" id="password" required>
-          </div>
+  <!-- <h2>Cadastrar</h2> -->
+  <form action="" method="get" class="form">
+    <div class="form-title">Fazer login</div>
+    <div class="form-content">
+      <div class="form-fields">
+        <div class="form-field">
+          <label for="name">Nome de Usuário</label>
+          <input type="text" name="name" id="name" placeholder="ex: João Frango" ref="username"  required>
         </div>
-        <div class = "check">
-          <input type="checkbox" id="manter" name="manter">
-          <label for="manter"> Mantenha me conectado</label>
+        <div class="form-field">
+          <label for="password">Senha</label>
+          <input type="password" name="password" id="password" placeholder="ex: 1234" required>
         </div>
       </div>
-      <div class="form-button">
-        <input type="submit" class="login-btn" value="Iniciar seção">
+    </div>
+    <div class="button-section">
+      <div class="button-container">
+        <button type="submit" class="login-btn">Avançar</button>
       </div>
     </div>
   </form>
 </template>
 
-<script setup>
-
+<script>
+export default {
+  name: 'Login',
+  mounted() {
+    this.$refs.username.focus();
+  },
+}
 </script>
 
 <style scoped>
-.form-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+
+.form-title {
+  font-size: 1.6rem;
+}
+
+.form {
+  background-color: var(--background-color-secondary);
+  border-radius: 10px;
+  padding: 60px 40px 60px;
   width: fit-content;
-  margin: auto;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  margin: 0rem auto;
 }
 
-.container {
+.form-content {
+  gap: 20rem;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+}
+
+.form-fields {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
 }
 
-.form-and-check {
-  padding: 1rem;
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  min-width: 400px;
 }
 
-.check {
-  padding: 0.5em;  
+.form-field>label {
+  align-self: flex-start;
+  font-size: 0.8rem;
 }
+
+.form-field>input {
+  height: 2rem;
+  border-radius: 5px;
+  border: 0;
+  padding: 5px 15px;
+  font-family: inherit;
+  font-size: 1.0rem;
+  outline: none;
+}
+
+.button-section {
+  display: flex;
+  align-items: flex-end;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
 .login-btn {
   font-family: inherit;
   background-color: transparent;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   color: var(--font-color-primary);
-  padding: 16px 20px;
-  margin: 8px 0;
+  padding: 12px 18px;
   cursor: pointer;
   width: fit-content;
   opacity: 0.9;
   align-items: center;
-  border: 1px solid var(--background-color-secondary);
   border-radius: 5px;
   transition: all;
   transition-duration: 0.4s;
+  align-self: flex-end;
+  border: 1px solid transparent;
 }
 
 .login-btn:hover {
-    transition-duration: 0.4s;
-    background-color: var(--background-color-secondary);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  }
-
-.form-field {
-  width: fit-content;
+  transition-duration: 0.4s;
+  border: 1px solid white;
 }
 
-.form-field>label {
-  margin-right: 5px;
+::placeholder {
+  font-style: italic;
 }
 </style>
