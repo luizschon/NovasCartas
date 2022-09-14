@@ -1,19 +1,22 @@
 <template>
   <!-- <h2>Cadastrar</h2> -->
-  <form action="" method="get" class="form-login">
+  <form action="" method="get" class="form">
+    <div class="form-title">Criar conta</div>
     <div class="form-content">
       <div class="form-fields">
         <div class="form-field">
           <label for="name">Nome de Usuário</label>
-          <input type="text" name="name" id="name" required>
+          <input type="text" name="name" id="name" placeholder="ex: João Frango" required>
         </div>
         <div class="form-field">
           <label for="password">Senha</label>
-          <input type="password" name="password" id="password" required>
+          <input type="password" name="password" id="password" placeholder="ex: 1234" required>
         </div>
       </div>
     </div>
-    <button type="submit" class="regstr-btn">Cadastrar</button>
+    <div class="button-container">
+      <button type="submit" class="register-btn">Avançar</button>
+    </div>
   </form>
 </template>
 
@@ -22,17 +25,17 @@
 </script>
 
 <style scoped>
-.form-login {
-  /* background-color: var(--background-color-secondary);
-    border-radius: 30px;
-    padding: 40px;
-    width: fit-content; */
-  margin: 2rem auto;
+
+.form-title {
+  font-size: 1.6rem;
 }
 
-.form-e-prefs {
-  display: flex;
-  flex-direction: row;
+.form {
+  background-color: var(--background-color-secondary);
+  border-radius: 10px;
+  padding: 60px 40px 60px;
+  width: fit-content;
+  margin: 0rem auto;
 }
 
 .form-content {
@@ -47,38 +50,62 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  min-width: 400px;
 }
 
 .form-field>label {
-  margin-right: 5px;
+  align-self: flex-start;
+  font-size: 0.8rem;
 }
 
-.pref-box {
+.form-field>input {
+  height: 2rem;
+  border-radius: 5px;
+  border: 0;
+  padding: 5px 15px;
+  font-family: inherit;
+  font-size: 1.0rem;
+  outline: none;
+}
+
+.button-container {
+  width: 100%;
   display: flex;
-  gap: 7px;
+  flex-direction: column;
+  margin-top: 60px;
 }
 
-.regstr-btn {
+.register-btn {
   font-family: inherit;
   background-color: transparent;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   color: var(--font-color-primary);
-  padding: 16px 20px;
-  margin: 8px 0;
+  padding: 12px 18px;
   cursor: pointer;
   width: fit-content;
   opacity: 0.9;
   align-items: center;
-  border: 1px solid var(--background-color-secondary);
   border-radius: 5px;
   transition: all;
   transition-duration: 0.4s;
+  align-self: flex-end;
+  border: 1px solid transparent;
 }
 
-.regstr-btn:hover {
+.register-btn:hover {
   transition-duration: 0.4s;
-  background-color: var(--background-color-secondary);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: 1px solid white;
+}
+
+::placeholder {
+  font-style: italic;
 }
 </style>
