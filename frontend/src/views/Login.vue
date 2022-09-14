@@ -88,11 +88,6 @@ export default {
   align-items: flex-end;
 }
 
-.checkbox-container {
-  min-width: fit-content;
-  padding: 12px 18px 12px 0px;
-}
-
 .button-container {
   width: 100%;
   display: flex;
