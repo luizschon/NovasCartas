@@ -6,7 +6,7 @@
       <div class="form-fields">
         <div class="form-field">
           <label for="name">Nome de Usuário</label>
-          <input type="text" name="name" id="name" placeholder="ex: João Frango" required>
+          <input type="text" name="name" id="name" placeholder="ex: João Frango" ref="username" required>
         </div>
         <div class="form-field">
           <label for="password">Senha</label>
@@ -20,8 +20,13 @@
   </form>
 </template>
 
-<script setup>
-
+<script>
+export default {
+  name: 'Register',
+  mounted() {
+    this.$refs.username.focus();
+  },
+}
 </script>
 
 <style scoped>
