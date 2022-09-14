@@ -17,7 +17,7 @@
     <div class="button-section">
       <div class="checkbox-container">
         <input type="checkbox" id="manter" name="manter">
-        <label for="manter"> Mantenha me conectado</label>
+        <label for="manter"> Mantenha-me conectado</label>
       </div>
       <div class="button-container">
         <button type="submit" class="login-btn">Avançar</button>
