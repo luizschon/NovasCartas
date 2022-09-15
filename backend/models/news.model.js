@@ -1,3 +1,21 @@
+const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
+
+const NewsSchema = mongoose.Schema({
+    title: { type: String, unique: true, required: true, dropDups: true },
+    url: { type: String, required: true },
+    description: { type: String, required: true },
+    source: { type: String, required: true },
+    date: { type: String, required: true },
+    // w_vector: { type: [Object], required: true }
+  },
+  { timestamps: true }
+);
+
+// Adiciona paginação ao schema de notícias
+NewsSchema.plugin(mongoosePaginate);
+const News = mongoose.model("news", NewsSchema);
+
 const { XMLParser } = require('fast-xml-parser');
 const fetch = require('node-fetch');
 
@@ -39,6 +57,7 @@ async function getNews(url) {
 }
 
 module.exports = {
+  News,
   parseXMLfromURL,
   filterNewsInfo,
   getNews
