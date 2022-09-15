@@ -1,13 +1,10 @@
-const bodyParser = require("body-parser");
+const router = require('express').Router();
+const users = require("../controllers/user.controller.js");
 
-module.exports = app => {
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
-  const users = require("../controllers/user.controller.js");
-  var router = require("express").Router();
-  // Cria um novo usuário
-  router.post("/", users.create);
-  // Retorna todos os usuários
-  router.get("/", users.findAll);
-  app.use('/api/users', router);
-};
+// Retorna todos os usuários
+router.get("/", users.findAll);
+
+// Cria um novo usuário
+router.post("/", users.create);
+
+module.exports = router;
