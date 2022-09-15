@@ -2,10 +2,10 @@
   <div class="card-container">
     <div class="card" v-if="news">
       <div class="rating-buttons">
-        <button id="rating-up" v-on:click="ratingUp(news.id)">
+        <button id="rating-up" v-on:click="ratingUp(news._id)">
           <span class="material-symbols-outlined">thumb_up</span>
         </button>
-        <button id="rating-down" v-on:click="click=ratingDown(news.id)">
+        <button id="rating-down" v-on:click="click=ratingDown(news._id)">
           <span class="material-symbols-outlined">thumb_down</span>
         </button>
       </div>
