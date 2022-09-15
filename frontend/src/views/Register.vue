@@ -1,5 +1,5 @@
 <template>
-  <form action="" method="get" class="form" @submit="createUser">
+  <form action="" method="get" class="form" ref="form" @submit="createUser">
     <div class="form-title">Criar conta</div>
     <div class="form-content">
       <div class="form-fields">
@@ -21,6 +21,29 @@
 
 <script>
 import { createUser } from '../api/user.js';
+import Swal from 'sweetalert2';
+
+// Mensagem de erro
+const errorPopUp = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  background: '#fee',
+  color: '#323232'
+});
+
+// Mensagem de sucesso
+const succPopUp = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  background: '#efe',
+  color: '#323232'
+});
 
 export default {
   name: 'Register',
@@ -43,12 +66,24 @@ export default {
           name: this.name,
           password: this.password
         });
-        window.alert("Usuário criado com sucesso!");
+
+        succPopUp.fire({
+          icon: 'success',
+          title: 'Usuário cadastrado com sucesso'
+        });
 
       } catch (err) {
         console.error("Erro ao criar usuário: ", err);
-        window.alert("Erro ao criar usuário!");
+
+        errorPopUp.fire({
+          icon: 'error',
+          title: 'Erro ao cadastrar usuário'
+        });
       }
+
+      // Limpa os campos do formulário
+      this.name = '';
+      this.password = '';
     },
   },
 }
