@@ -1,5 +1,5 @@
 import api from './base';
 
 export function createUser(data) {
-    return api.post('/api/users', data);
+    return api.post('/users', data);
 }
