@@ -4,7 +4,8 @@
       <div id="nav">
         <router-link to="/" class="nav-item">Novas</router-link> | 
         <router-link to="/register" class="nav-item">Registrar</router-link> | 
-        <router-link to="/login" class="nav-item">Login</router-link>
+        <router-link to="/login" class="nav-item">Login</router-link> |
+        <router-link to="/devs" class="nav-item">Devs</router-link>
       </div>
       <h1 id="page-title">NovasCartas</h1>
     </div>
@@ -26,6 +27,7 @@ export default {
   position: sticky;
   height: 12rem;
   top: calc(9rem - 12rem);
+  z-index: 2;
 }
 
 .header-inner {
