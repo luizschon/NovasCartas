@@ -4,6 +4,8 @@ const NewsRouter = require('./routes/news.js');
 
 const app = express()
 const db = require('./models/index.js')
+app.use(cors())
+
 require('./routes/user.routes')(app);
 
 db.mongoose.connect(db.url, {
@@ -15,8 +17,6 @@ db.mongoose.connect(db.url, {
   console.log("Não foi possível conectar ao Banco de Dados!", err);
   process.exit();
 })
-
-app.use(cors())
 
 const port = process.env.PORT || 6969
 
