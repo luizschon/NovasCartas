@@ -39,4 +39,10 @@ export default {
   width: 90%;
   max-width: 1000px;
 }
+
+@media (max-width: 850px) {
+  #news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 </style>
