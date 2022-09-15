@@ -1,16 +1,15 @@
 <template>
-  <!-- <h2>Cadastrar</h2> -->
-  <form action="" method="get" class="form">
+  <form action="" method="get" class="form" @submit="createUser">
     <div class="form-title">Criar conta</div>
     <div class="form-content">
       <div class="form-fields">
         <div class="form-field">
           <label for="name">Nome de Usuário</label>
-          <input type="text" name="name" id="name" placeholder="ex: João Frango" ref="username" required>
+          <input type="text" v-model="name" name="name" id="name" placeholder="ex: João Frango" ref="username" required>
         </div>
         <div class="form-field">
           <label for="password">Senha</label>
-          <input type="password" name="password" id="password" placeholder="ex: 1234" required>
+          <input type="password" v-model="password" name="password" id="password" placeholder="ex: 1234" required>
         </div>
       </div>
     </div>
@@ -21,10 +20,36 @@
 </template>
 
 <script>
+import { createUser } from '../api/user.js';
+
 export default {
   name: 'Register',
   mounted() {
     this.$refs.username.focus();
+  },
+  data() {
+    return {
+      name: '',
+      password: '',
+    };
+  },
+  methods: {
+    // Cria usuário 
+    async createUser(e) {
+      e.preventDefault();
+
+      try {
+        await createUser({
+          name: this.name,
+          password: this.password
+        });
+        window.alert("Usuário criado com sucesso!");
+
+      } catch (err) {
+        console.error("Erro ao criar usuário: ", err);
+        window.alert("Erro ao criar usuário!");
+      }
+    },
   },
 }
 </script>
