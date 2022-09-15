@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const NewsRouter = require('./routes/news.js');
+const NewsRouter = require('./routes/news.routes.js');
+const JobsRouter = require('./jobs/saveNews.js');
 
 const app = express()
 const db = require('./models/index.js')
@@ -27,6 +28,7 @@ app.get('/', (_req, res) => {
 })
 
 app.use('/news', NewsRouter)
+app.use('/jobs', JobsRouter)
 
 app.listen(port, () => {
   console.log(`Novas Cartas listening on port ${port}`)

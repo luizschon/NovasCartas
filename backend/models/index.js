@@ -5,4 +5,5 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.users = require("./user.model.js")(mongoose);
+db.news = require("./news.model.js").News;
 module.exports = db;
