@@ -6,7 +6,7 @@
       <div class="form-fields">
         <div class="form-field">
           <label for="name">Nome de Usuário</label>
-          <input type="text" name="name" id="name" placeholder="ex: João Frango" ref="username"  required>
+          <input type="text" name="name" id="name" placeholder="ex: João Frango" ref="username" autocomplete="off" required>
         </div>
         <div class="form-field">
           <label for="password">Senha</label>
