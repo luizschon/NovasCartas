@@ -21,6 +21,7 @@
 import FormInput from '../components/FormInput.vue';
 import { createUser } from '../api/user.js';
 import Alert from '../alert.js';
+import router from '../router';
 
 const alert = new Alert({
   errorIcon: 'error',
@@ -49,15 +50,18 @@ export default {
           name: this.fields.name.vModel,
           password: this.fields.password.vModel
         });
+        
+        // Limpa os campos do formulário e troca para a rota das notícias
+        this.fields.name.vModel = '';
+        this.fields.password.vModel = '';
+
+        router.push('/');
         alert.fireSuccess();
+        
       } catch (err) {
         console.error("Erro ao criar usuário: ", err);
         alert.fireError();
       }
-
-      // Limpa os campos do formulário
-      this.fields.name.vModel = '';
-      this.fields.password.vModel = '';
     },
   }
 }
