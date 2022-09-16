@@ -46,18 +46,24 @@ export default {
     // Cria usuário 
     async createUser(data) {
       try {
-        await createUser({
+        const response = await createUser({
           name: this.fields.name.vModel,
           password: this.fields.password.vModel
         });
-        
-        // Limpa os campos do formulário e troca para a rota das notícias
-        this.fields.name.vModel = '';
-        this.fields.password.vModel = '';
 
-        router.push('/');
-        alert.fireSuccess();
-        
+        const token = response.data.token;
+
+        // Limpa os campos do formulário e troca para a aba de notícias
+        if (token) {
+          localStorage.setItem('jwt', token);
+          alert.fireSuccess();
+
+          this.name = '';
+          this.password = '';
+          router.push('/');
+        } else {
+          console.error("Usuário não possui token");
+        }
       } catch (err) {
         console.error("Erro ao criar usuário: ", err);
         alert.fireError();

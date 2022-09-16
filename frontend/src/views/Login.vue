@@ -1,5 +1,5 @@
 <template>
-  <form action="" method="get" class="form" @submit.prevent="noLoginYet">
+  <form action="" method="get" class="form" @submit.prevent="loginUser">
     <div class="form-title">Fazer login</div>
     <div class="form-content">
       <div class="form-fields">
@@ -18,7 +18,17 @@
 </template>
 
 <script>
+import { loginUser } from '../api/user.js';
+import router from '../router';
 import FormInput from '../components/FormInput.vue';
+import Alert from '../alert.js';
+
+const alert = new Alert({
+  errorIcon: 'error',
+  errorTitle: 'Erro ao fazer login',
+  succIcon: 'success',
+  succTitle: 'Login realizado com sucesso',
+});
 
 export default {
   data() {
@@ -33,12 +43,29 @@ export default {
     FormInput,
   },
   methods: {
-    noLoginYet(data) {
-      console.log("You pressed the button!");
+    async loginUser(e) {
+      try {
+        const response = await loginUser({
+          name: this.fields.name.vModel,
+          password: this.fields.password.vModel
+        });
 
-      // Limpa os campos depois de enviar
-      this.fields.name.vModel = '';
-      this.fields.password.vModel = '';
+        const token = response.data.token;
+        localStorage.setItem('jwt', token);
+
+        // Limpa os campos do formulário e troca para a aba de notícias
+        if (token) {
+          alert.fireSuccess();
+
+          this.name = '';
+          this.password = '';
+          router.push('/');
+        }
+
+      } catch (err) {
+        console.error("Erro ao fazer login: ", err);
+        alert.fireError();
+      }
     },
   },
 }
