@@ -1,16 +1,16 @@
 <template>
   <!-- <h2>Cadastrar</h2> -->
-  <form action="" method="get" class="form">
+  <form action="" method="get" class="form" @submit.prevent="loginUser">
     <div class="form-title">Fazer login</div>
     <div class="form-content">
       <div class="form-fields">
         <div class="form-field">
           <label for="name">Nome de Usuário</label>
-          <input type="text" name="name" id="name" placeholder="ex: João Frango" ref="username"  required>
+          <input type="text" v-model="name" name="name" id="name" placeholder="ex: João Frango" ref="username"  required>
         </div>
         <div class="form-field">
           <label for="password">Senha</label>
-          <input type="password" name="password" id="password" placeholder="ex: 1234" required>
+          <input type="password" v-model="password" name="password" id="password" placeholder="ex: 1234" required>
         </div>
       </div>
     </div>
@@ -23,10 +23,71 @@
 </template>
 
 <script>
+import { loginUser } from '../api/user.js';
+import Swal from 'sweetalert2';
+import router from '../router';
+
+// Mensagem de erro
+const errorPopUp = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  background: '#fee',
+  color: '#323232'
+});
+
+// Mensagem de sucesso
+const succPopUp = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  background: '#efe',
+  color: '#323232'
+});
+
 export default {
   name: 'Login',
   mounted() {
     this.$refs.username.focus();
+  },
+  data() {
+    return {
+      name: '',
+      password: '',
+    };
+  },
+  methods: {
+    async loginUser(e) {
+      try {
+        await loginUser({
+          name: this.name,
+          password: this.password
+        });
+
+        succPopUp.fire({
+          icon: 'success',
+          title: 'Login realizado com sucesso'
+        });
+
+      } catch (err) {
+        console.error("Erro ao fazer login: ", err);
+
+        errorPopUp.fire({
+          icon: 'error',
+          title: 'Erro ao fazer login'
+        });
+      }
+
+      // Limpa os campos do formulário e troca para a aba de notícias
+      this.name = '';
+      this.password = '';
+
+      router.push('/');
+    },
   },
 }
 </script>

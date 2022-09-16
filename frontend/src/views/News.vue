@@ -20,7 +20,7 @@ export default {
   async mounted() {
     try {
       const res = await getNews();
-      this.newsList = res.data
+      this.newsList = res.data.news
     } catch (err) {
       console.error(err);    // Deu errado
     }
