@@ -21,6 +21,14 @@
 import { loginUser } from '../api/user.js';
 import router from '../router';
 import FormInput from '../components/FormInput.vue';
+import Alert from '../alert.js';
+
+const alert = new Alert({
+  errorIcon: 'error',
+  errorTitle: 'Erro ao fazer login',
+  succIcon: 'success',
+  succTitle: 'Login realizado com sucesso',
+});
 
 export default {
   data() {
@@ -35,26 +43,11 @@ export default {
     FormInput,
   },
   methods: {
-    noLoginYet(data) {
-      console.log("You pressed the button!");
-
-      // Limpa os campos depois de enviar
-      this.fields.name.vModel = '';
-      this.fields.password.vModel = '';
-    },
-  },
-  data() {
-    return {
-      name: '',
-      password: '',
-    };
-  },
-  methods: {
     async loginUser(e) {
       try {
         const response = await loginUser({
-          name: this.name,
-          password: this.password
+          name: this.fields.name.vModel,
+          password: this.fields.password.vModel
         });
 
         const token = response.data.token;
@@ -62,10 +55,7 @@ export default {
 
         // Limpa os campos do formulário e troca para a aba de notícias
         if (token) {
-          succPopUp.fire({
-            icon: 'success',
-            title: 'Login realizado com sucesso'
-          });
+          alert.fireSuccess();
 
           this.name = '';
           this.password = '';
@@ -74,11 +64,7 @@ export default {
 
       } catch (err) {
         console.error("Erro ao fazer login: ", err);
-
-        errorPopUp.fire({
-          icon: 'error',
-          title: 'Erro ao fazer login'
-        });
+        alert.fireError();
       }
     },
   },
