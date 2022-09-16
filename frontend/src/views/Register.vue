@@ -22,6 +22,7 @@
 <script>
 import { createUser } from '../api/user.js';
 import Swal from 'sweetalert2';
+import router from '../router';
 
 // Mensagem de erro
 const errorPopUp = Swal.mixin({
@@ -72,6 +73,12 @@ export default {
           title: 'Usuário cadastrado com sucesso'
         });
 
+        // Limpa os campos do formulário e troca para a aba de notícias
+        this.name = '';
+        this.password = '';
+
+        router.push('/');
+
       } catch (err) {
         console.error("Erro ao criar usuário: ", err);
 
@@ -80,10 +87,6 @@ export default {
           title: 'Erro ao cadastrar usuário'
         });
       }
-
-      // Limpa os campos do formulário
-      this.name = '';
-      this.password = '';
     },
   },
 }

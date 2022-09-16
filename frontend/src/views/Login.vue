@@ -73,6 +73,12 @@ export default {
           title: 'Login realizado com sucesso'
         });
 
+        // Limpa os campos do formulário e troca para a aba de notícias
+        this.name = '';
+        this.password = '';
+
+        router.push('/');
+
       } catch (err) {
         console.error("Erro ao fazer login: ", err);
 
@@ -81,12 +87,6 @@ export default {
           title: 'Erro ao fazer login'
         });
       }
-
-      // Limpa os campos do formulário e troca para a aba de notícias
-      this.name = '';
-      this.password = '';
-
-      router.push('/');
     },
   },
 }
