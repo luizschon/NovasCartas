@@ -86,26 +86,28 @@ def test():
     ## Problema: Os valores de similaridade de cosseno não batem com o do artigo.
     ## No artigo, foi usado a biblioteca sklearn para fazer o cálculo. Não sei o que é feito diferente nela.
 
-    # numOfDocuments = 4
-    # corpusFrequencyIdfVector = {
-    # "blue": [1, 0],
-    # "sun": [3, 0],
-    # "bright": [3, 0],
-    # "sky": [2, 0],
-    # }
-    # vec1 = {"blue": 1, "sky": 1}
-    # vec2 = {"sun": 1, "bright": 1}
-    # vec3 = {"sun": 1, "bright": 1, "sky": 1}
-    # vec4 = {"sun": 2, "bright": 1}
-    # vecAll = [vec1, vec2, vec3, vec4]
-    # setIdfForCorpus(numOfDocuments, corpusFrequencyIdfVector)
-    # setTfidfForAllDocs(corpusFrequencyIdfVector, vecAll)
-    # for vec in vecAll:
-    #     normalizeWordVec(vec)
-    # print(vecAll)
-    # print(corpusFrequencyIdfVector)
-    # cosTest = calculateCosSimilarity(vec3, vec4)
-    # print(cosTest)
+    numOfDocuments = 4
+    corpusFrequencyIdfVector = {
+    "blue": [1, 0],
+    "sun": [3, 0],
+    "bright": [3, 0],
+    "sky": [2, 0],
+    }
+
+
+    vec1 = {"blue": 1, "sky": 1}
+    vec2 = {"sun": 1, "bright": 1}
+    vec3 = {"sun": 1, "bright": 1, "sky": 1}
+    vec4 = {"sun": 2, "bright": 1}
+    vecAll = [vec1, vec2, vec3, vec4]
+    setIdfForCorpus(numOfDocuments, corpusFrequencyIdfVector)
+    setTfidfForAllDocs(corpusFrequencyIdfVector, vecAll)
+    for vec in vecAll:
+        normalizeWordVec(vec)
+    print(vecAll)
+    print(corpusFrequencyIdfVector)
+    cosTest = calculateCosSimilarity(vec3, vec4)
+    print(cosTest)
 
     # O programa tem como entrada uma lista de listas: cada lista contém uma sequência de palavras.
     # Ou seja, é necessário parsear o documento de forma a eliminar elementos que não sejam palavras (remover pontuação).
