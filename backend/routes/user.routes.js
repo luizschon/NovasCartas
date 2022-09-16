@@ -6,8 +6,10 @@ module.exports = app => {
   const users = require("../controllers/user.controller.js");
   var router = require("express").Router();
   // Cria um novo usuário
-  router.post("/", users.create);
+  router.post("/", users.registerUser);
   // Retorna todos os usuários
   router.get("/", users.findAll);
-  app.use('/api/users', router);
+  // Login de um usuário
+  router.post("/login", users.loginUser);
+  app.use('/users', router);
 };

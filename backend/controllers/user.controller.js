@@ -11,38 +11,43 @@ const db = require("../models");
 const User = db.users;
 
 // Cria e salva um novo usuário
-exports.create = (req, res) => {
-  // Valida a requisição
-  if (!req.body.name) {
-    res.status(400).send({ message: "O nome não pode ser vazio!" });
-    return;
-  }
-
-  // Cria um novo usuário
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  });
-
-  // Salva o usuário no banco de dados
-  user
-    .save(user)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Ocorreu um erro ao criar o usuário."
-      });
+exports.registerUser = async (req, res) => {
+  try{
+    // Cria um novo usuário
+    const user = new User({
+      name: req.body.name,
+      password: req.body.password,
     });
+
+    // Salva o usuário no banco de dados
+    const data = await user.save();
+    const token = await user.generateAuthToken();
+    res.status(201).send({ data,token });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
+
+// login de um usuário
+exports.loginUser = async (req, res) => {
+  try {
+    const name = req.body.name;
+    const password = req.body.password;
+    const user = await User.findByCredentials(name, password);
+    if (!user) {
+      return res.status(401).json({ error: "Falha na autenticação!" });
+    }
+    const token = await user.generateAuthToken();
+    res.status(201).json({ user, token });
+  } catch (err) {
+    res.status(400).json({ err: "error" });
+  }
 };
 
 // Retorna todos os usuários do banco de dados
 exports.findAll = (req, res) => {
-  const email = req.query.email;
-  var condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+  const name = req.query.name;
+  var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
   User.find(condition)
     .then(data => {
       res.send(data);
