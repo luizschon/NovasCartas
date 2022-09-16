@@ -63,21 +63,25 @@ export default {
   methods: {
     async loginUser(e) {
       try {
-        await loginUser({
+        const response = await loginUser({
           name: this.name,
           password: this.password
         });
 
-        succPopUp.fire({
-          icon: 'success',
-          title: 'Login realizado com sucesso'
-        });
+        const token = response.data.token;
+        localStorage.setItem('jwt', token);
 
         // Limpa os campos do formulário e troca para a aba de notícias
-        this.name = '';
-        this.password = '';
+        if (token) {
+          succPopUp.fire({
+            icon: 'success',
+            title: 'Login realizado com sucesso'
+          });
 
-        router.push('/');
+          this.name = '';
+          this.password = '';
+          router.push('/');
+        }
 
       } catch (err) {
         console.error("Erro ao fazer login: ", err);
