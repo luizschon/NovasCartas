@@ -29,6 +29,17 @@ export default class Alert {
       background: '#efe',
       color: '#323232'
     });
+
+    // Mensagem informativa
+    this.infoPopUp = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: '#eee',
+      color: '#323232'
+    });
   }
 
   // Manda alerta de erro
@@ -44,6 +55,14 @@ export default class Alert {
     this.succPopUp.fire({
       icon: this.params.succIcon,
       title: this.params.succTitle
+    });
+  }
+
+  // Manda alerta informativo
+  fireInfo() {
+    this.infoPopUp.fire({
+      icon: this.params.infoIcon,
+      title: this.params.infoTitle
     });
   }
 }
