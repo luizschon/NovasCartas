@@ -17,7 +17,7 @@ export const useUser = defineStore('user', {
         password: password
       });
 
-      this.user = res.data.user
+      this.user = res.data.data;
       this.isAuthenticated = true;
       this.token = res.data.token;
       localStorage.setItem('jwt', res.data.token);
