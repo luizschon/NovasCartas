@@ -1,8 +1,7 @@
 <template>
-  <!-- <h1 @click="clicked">LOL</h1> -->
   <header class="header-outer">
     <div class="header-inner">
-    <div ref="profpic" class="profile-container" v-if="store.user">{{ store.user.name }}</div>
+      <div class="profile-container" v-if="store.user">{{ store.user.name }}</div>
       <div id="nav">
         <router-link to="/" class="nav-item">Novas</router-link> | 
         <span v-if="!store.isAuthenticated">
@@ -41,10 +40,6 @@ export default {
       router.push('/');
       alert.fireInfo();
     },
-    clicked(data) {
-      console.log(this.store.user.name);
-      this.$refs.profpic.innerText = this.store.user.name;
-    }
   }
 };
 </script>
