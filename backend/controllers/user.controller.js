@@ -8,6 +8,8 @@
 */
 
 const db = require("../models");
+const jwt = require("jsonwebtoken");
+
 const User = db.users;
 
 // Cria e salva um novo usuário
@@ -42,6 +44,17 @@ exports.loginUser = async (req, res) => {
   } catch (err) {
     res.status(400).json({ err: "error" });
   }
+};
+
+exports.autoLoginUser = async (req, res) => {
+  try {
+    const token = req.body.token;
+    const decodedUser = jwt.verify(token, "secret");
+    res.status(200).json(decodedUser);
+  } catch (err) {
+    res.status(400).json({ err: "erro" });
+  }
+
 };
 
 // Retorna todos os usuários do banco de dados

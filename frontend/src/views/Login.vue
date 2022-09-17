@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { loginUser } from '../api/user.js';
+import { useUser } from '../store/user';
 import router from '../router';
 import FormInput from '../components/FormInput.vue';
 import Alert from '../alert.js';
@@ -45,22 +45,17 @@ export default {
   methods: {
     async loginUser(e) {
       try {
-        const response = await loginUser({
-          name: this.fields.name.vModel,
-          password: this.fields.password.vModel
-        });
+        const name = this.fields.name.vModel;
+        const password = this.fields.password.vModel;
 
-        const token = response.data.token;
-        localStorage.setItem('jwt', token);
+        useUser().login(name, password);
 
         // Limpa os campos do formulário e troca para a aba de notícias
-        if (token) {
-          alert.fireSuccess();
+        alert.fireSuccess();
 
-          this.name = '';
-          this.password = '';
-          router.push('/');
-        }
+        this.name = '';
+        this.password = '';
+        router.push('/');
 
       } catch (err) {
         console.error("Erro ao fazer login: ", err);

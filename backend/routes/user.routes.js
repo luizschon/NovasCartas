@@ -10,4 +10,7 @@ router.post("/", users.registerUser);
 // Login de um usuário
 router.post("/login", users.loginUser);
 
+// Autologin de um usuário
+router.post("/auto_login", users.autoLoginUser);
+
 module.exports = router;
