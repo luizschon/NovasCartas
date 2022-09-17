@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
-import { autoLoginUser, loginUser } from '../api/user';
+import { createUser, autoLoginUser, loginUser } from '../api/user';
 
 export const useUser = defineStore('user', {
   state: () => (
@@ -11,11 +11,22 @@ export const useUser = defineStore('user', {
     })
   ),
   actions: {
+    async registerUser(name, password) {
+      const res = await createUser({
+        name: name,
+        password: password
+      });
+
+      this.user = res.data.user
+      this.isAuthenticated = true;
+      this.token = res.data.token;
+      localStorage.setItem('jwt', res.data.token);
+    },
     async autoLogin() {
       try {
         const res = await autoLoginUser(this.token);
         this.user = res.data;
-        this.isAuthenticated = true
+        this.isAuthenticated = true;
 
       } catch (err) {
         this.isAuthenticated = false
