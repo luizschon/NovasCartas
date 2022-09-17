@@ -19,7 +19,7 @@
 
 <script>
 import FormInput from '../components/FormInput.vue';
-import { createUser } from '../api/user.js';
+import { useUser } from '../store/user'
 import Alert from '../alert.js';
 import router from '../router';
 
@@ -46,24 +46,17 @@ export default {
     // Cria usuário 
     async createUser(data) {
       try {
-        const response = await createUser({
-          name: this.fields.name.vModel,
-          password: this.fields.password.vModel
-        });
+        const name = this.fields.name.vModel;
+        const password = this.fields.password.vModel;
 
-        const token = response.data.token;
+        await useUser().registerUser(name, password);
 
-        // Limpa os campos do formulário e troca para a aba de notícias
-        if (token) {
-          localStorage.setItem('jwt', token);
-          alert.fireSuccess();
+        alert.fireSuccess();
 
-          this.name = '';
-          this.password = '';
-          router.push('/');
-        } else {
-          console.error("Usuário não possui token");
-        }
+        this.name = '';
+        this.password = '';
+        router.push('/');
+
       } catch (err) {
         console.error("Erro ao criar usuário: ", err);
         alert.fireError();

@@ -48,7 +48,7 @@ export default {
         const name = this.fields.name.vModel;
         const password = this.fields.password.vModel;
 
-        useUser().login(name, password);
+        await useUser().login(name, password);
 
         // Limpa os campos do formulário e troca para a aba de notícias
         alert.fireSuccess();
