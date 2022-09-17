@@ -1,6 +1,8 @@
 <template>
+  <!-- <h1 @click="clicked">LOL</h1> -->
   <header class="header-outer">
     <div class="header-inner">
+    <div ref="profpic" class="profile-container" v-if="store.user">{{ store.user.name }}</div>
       <div id="nav">
         <router-link to="/" class="nav-item">Novas</router-link> | 
         <span v-if="!store.isAuthenticated">
@@ -18,9 +20,15 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import { useUser } from '../store/user'
 import router from '../router';
+import Alert from '../alert';
+
+const alert = new Alert({
+  infoIcon: 'info',
+  infoTitle: 'Logout realizado com sucesso',
+});
+
 export default {
   name: "Header",
   setup() {
@@ -29,8 +37,13 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.store.logout()
+      this.store.logout();
       router.push('/');
+      alert.fireInfo();
+    },
+    clicked(data) {
+      console.log(this.store.user.name);
+      this.$refs.profpic.innerText = this.store.user.name;
     }
   }
 };
@@ -58,6 +71,22 @@ export default {
 
 #nav {
   padding: 15px;
+}
+
+.profile-container {
+  margin: 1rem;
+  font-size: 0.8rem;
+  background-color: red;
+  width: fit-content;
+  padding: 10px;
+  margin: 2rem;
+  border-radius: 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 8px 0px;
+  color: black;
+  background-color: #dedede;
 }
 
 a {
