@@ -12,15 +12,20 @@ export const useUser = defineStore('user', {
   ),
   actions: {
     async registerUser(name, password) {
-      const res = await createUser({
-        name: name,
-        password: password
-      });
+      try {
+        const res = await createUser({
+          name: name,
+          password: password
+        });
 
-      this.user = res.data.data;
-      this.isAuthenticated = true;
-      this.token = res.data.token;
-      localStorage.setItem('jwt', res.data.token);
+        this.user = res.data.data;
+        this.isAuthenticated = true;
+        this.token = res.data.token;
+        localStorage.setItem('jwt', res.data.token);
+
+      } catch (err) {
+        throw "Erro ao registrar"
+      }
     },
     async autoLogin() {
       try {
@@ -29,20 +34,24 @@ export const useUser = defineStore('user', {
         this.isAuthenticated = true;
 
       } catch (err) {
-        this.isAuthenticated = false
-        console.error(err);
+        this.isAuthenticated = false;
       }
     },
     async login(name, password) {
-      const res = await loginUser({
-        name: name,
-        password: password
-      });
+      try {
+        const res = await loginUser({
+          name: name,
+          password: password
+        });
 
-      this.user = res.data.user
-      this.isAuthenticated = true
-      this.token = res.data.token;
-      localStorage.setItem('jwt', res.data.token);
+        this.user = res.data.user
+        this.isAuthenticated = true
+        this.token = res.data.token;
+        localStorage.setItem('jwt', res.data.token);
+
+      } catch (err) {
+        throw "Erro ao fazer login"
+      }
     },
     async logout() {
       localStorage.removeItem("jwt");
