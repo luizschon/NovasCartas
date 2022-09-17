@@ -18,9 +18,15 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import { useUser } from '../store/user'
 import router from '../router';
+import Alert from '../alert';
+
+const alert = new Alert({
+  infoIcon: 'info',
+  infoTitle: 'Logout realizado com sucesso',
+});
+
 export default {
   name: "Header",
   setup() {
@@ -29,8 +35,9 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.store.logout()
+      this.store.logout();
       router.push('/');
+      alert.fireInfo();
     }
   }
 };
