@@ -120,17 +120,19 @@ function processNewsArray (newsArray) {
     return docList;
 }
 
-function getCosSimForQuery (corpusObject, queryVector) {
+function getCosSimForQuery (corpusObject, queryVectorPos, queryVectorNeg) {
     // Element format: [cosSim, original position index].
     // The order will be changed later.
     let cosSimArray = new Array();
     // Apply idf to query vector.
-    applyIdfToTfVector(corpusObject.corpusDictionary, queryVector);
+    applyIdfToTfVector(corpusObject.corpusDictionary, queryVectorPos);
+    applyIdfToTfVector(corpusObject.corpusDictionary, queryVectorNeg);
     let i = 0;
     corpusObject.docVectors.forEach(
         (docVec) => {
-            let cosSim = calculateCosSimilarity(queryVector, docVec);
-            cosSimArray.push([cosSim, i]);
+            let cosSimP = calculateCosSimilarity(queryVectorPos, docVec);
+            let cosSimN = calculateCosSimilarity(queryVectorNeg, docVec);
+            cosSimArray.push([cosSimP - cosSimN, i]);
             i += 1;
         });
     return cosSimArray;
@@ -140,12 +142,12 @@ function cosSimArrayCompare (obj0, obj1) {
     return obj1[0] - obj0[0];
 }
 
-async function getRankingForQuery (queryVector) {
+async function getRankingForQuery (queryVectorPos, queryVectorNeg) {
     let news = await getNews('https://feeds.bbci.co.uk/portuguese/rss.xml');
 
     let docList = processNewsArray(news);
     corpusObject = createCorpusDictionaryAndVectorizeDocs(docList);
-    cosSimArray = getCosSimForQuery(corpusObject, queryVector);
+    cosSimArray = getCosSimForQuery(corpusObject, queryVectorPos, queryVectorNeg);
 
     // Sorting by highest cosSim.
     cosSimArray.sort(cosSimArrayCompare);
@@ -163,14 +165,21 @@ async function getRankingForQuery (queryVector) {
 
 // Testes.
 
-let queryVector = new Map([
+let queryVectorP = new Map([
     ["tênis", 2],
-    ["cinema", 1],
-    ["bolsonaro", 1],
-    ["ucrânia", 1]
+    ["cinema", 1]
 ]);
 
-let output = getRankingForQuery(queryVector);
+let queryVectorN = new Map([
+    ["bolsonaro", 2],
+    ["eleições", 1],
+    ["eleição", 1],
+    ["lula", 1],
+    ["ucrânia", 3],
+    ["rainha", 1]
+]);
+
+let output = getRankingForQuery(queryVectorP, queryVectorN);
 output.then(
     (value) => {
         console.log(value);
