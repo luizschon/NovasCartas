@@ -13,4 +13,7 @@ router.post("/login", users.loginUser);
 // Autologin de um usuário
 router.post("/auto_login", users.autoLoginUser);
 
+// Autologin de um usuário
+router.patch("/:id/prefs", users.updatePrefs);
+
 module.exports = router;

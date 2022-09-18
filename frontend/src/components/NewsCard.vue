@@ -23,6 +23,11 @@
   </div>
 </template>
 
+<script setup>
+import api from '../api/base'
+import { useUser } from '../store/user'
+</script>
+
 <script>
   export default {
     name: "NewsCard",
@@ -33,6 +38,7 @@
     methods: {
       ratingUp(id) {
         console.log("RATING UP - ID:", id);
+        api.patch('/users/' + useUser().user._id + '/prefs', { news_id: this.news._id, rating_up: true })
       },
       ratingDown(id) {
         console.log("RATING DOWN - ID:", id);

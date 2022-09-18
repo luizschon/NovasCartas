@@ -11,6 +11,15 @@ const db = require("../models");
 const jwt = require("jsonwebtoken");
 
 const User = db.users;
+const News = db.news;
+
+const {
+  createCorpusDictionaryAndVectorizeDocs,
+  processNewsArray
+} = require('../models/tf-idf')
+    
+    
+    
 
 // Cria e salva um novo usuário
 exports.registerUser = async (req, res) => {
@@ -79,8 +88,31 @@ exports.findOne = (req, res) => {
 }
 
 // Atualiza um usuário pelo id
-exports.update = (req, res) => {
+exports.updatePrefs = async (req, res) => {
+  const rating_up = req.body.rating_up;
+  const news_id = req.body.news_id;
+  const user_id = req.params.id;
 
+  try {
+    const news = await News.findById(news_id).exec();
+    const { docVectors } = createCorpusDictionaryAndVectorizeDocs(processNewsArray([news]));
+    console.log(docVectors[0]);
+    
+    const user = await User.findById(user_id).exec();
+
+    if (rating_up) {
+      // @TODO: Somar valores de chaves repetidas ao concatenar
+      user.liked_terms = new Map([...user.liked_terms].concat([...docVectors[0]]));
+      console.log(user.liked_terms);
+    } else {
+      console.log(user.disliked_terms);
+    }
+    user.save()
+    res.status(200).send();
+  } catch (err) {
+    res.status(400).json({ erro: err });
+  }
+  
 }
 
 // Remove um usuário pelo id

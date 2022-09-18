@@ -1,4 +1,4 @@
-const { getNews } = require('./news.js')
+const { getNews } = require('./news.model.js')
 // Transcrevenedo as funções que foram escritas em Python.
 
 function getEuclidianLen (vector) {
@@ -80,7 +80,7 @@ function createCorpusDictionaryAndVectorizeDocs (docList) {
     calculateIdfAllTerms(numOfDocuments, corpusFreqIdf);
     docVectors.forEach(
         (vector) => {
-            applyIdfToTfVector(corpusFreqIdf, vector);
+            applyIdfToTfVector(corpusFreqIdf, new Map(vector));
         }
     );
     returnObj = new Object();
@@ -165,30 +165,26 @@ async function getRankingForQuery (queryVectorPos, queryVectorNeg) {
 
 // Testes.
 
-let queryVectorP = new Map([
-    ["tênis", 2],
-    ["cinema", 1]
-]);
-
-let queryVectorN = new Map([
-    ["bolsonaro", 2],
-    ["eleições", 1],
-    ["eleição", 1],
-    ["lula", 1],
-    ["ucrânia", 3],
-    ["rainha", 1]
-]);
-
-let output = getRankingForQuery(queryVectorP, queryVectorN);
-output.then(
-    (value) => {
-        console.log(value);
-    }
-);
-
-
-
-
+// let queryVectorP = new Map([
+//     ["tênis", 2],
+//     ["cinema", 1]
+// ]);
+//
+// let queryVectorN = new Map([
+//     ["bolsonaro", 2],
+//     ["eleições", 1],
+//     ["eleição", 1],
+//     ["lula", 1],
+//     ["ucrânia", 3],
+//     ["rainha", 1]
+// ]);
+//
+// let output = getRankingForQuery(queryVectorP, queryVectorN);
+// output.then(
+//     (value) => {
+//         console.log(value);
+//     }
+// );
 
 
 // Apagar depois
@@ -211,3 +207,10 @@ output.then(
 
 // result = createCorpusDictionaryAndVectorizeDocs(output);
 // console.log(result);
+
+
+module.exports = {
+    processNewsArray,
+    getRankingForQuery,
+    createCorpusDictionaryAndVectorizeDocs,
+}
