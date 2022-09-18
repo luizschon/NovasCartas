@@ -1,5 +1,11 @@
 <template>
-  <input type="text" v-model="pesquisa">
+  <div class="busca-content">
+    <form class="busca">
+      <input v-on:keydown.enter.prevent='addCategory' type="text" id="barra-de-pesquisa" v-model="pesquisa" placeholder=" Pesquisar">
+      <img class="icone-busca" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png">
+    </form>
+  </div>
+  
   <div id="news-grid" ref="newsGrid">
     <NewsCard v-for="news in newsPesquisa" :key="news._id" :news="news" />
   </div>
@@ -104,4 +110,43 @@ export default {
     grid-template-columns: repeat(1, 1fr);
   }
 }
+.busca{
+  width: 400px;
+  
+}
+
+.busca-content{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+}
+
+input#barra-de-pesquisa{
+  margin: 0 auto;
+  width: 100%;
+  height: 40px;
+  padding: 0 0px;
+  font-size: 0.9rem;
+  border: 1px solid #D0CFCE;
+  outline: none;
+  border-radius: 8px 8px 8px 8px;
+ }
+
+input:focus {
+  background-color: rgb(224, 247, 255);
+}
+.icone-busca{
+  position: relative;
+  float: right;
+  width: 75px;
+  height: 75px;
+  top: -59px;
+  right: -15px;
+}
+
+::placeholder {
+  font-style: italic;
+}
+
 </style>
