@@ -9,6 +9,7 @@
 
 const db = require("../models");
 const jwt = require("jsonwebtoken");
+const { updateNewsIdArrayAndTerms } = require('../utils/map');
 
 const User = db.users;
 const News = db.news;
@@ -17,9 +18,6 @@ const {
   createCorpusDictionaryAndVectorizeDocs,
   processNewsArray
 } = require('../models/tf-idf')
-    
-    
-    
 
 // Cria e salva um novo usuário
 exports.registerUser = async (req, res) => {
@@ -87,6 +85,7 @@ exports.findOne = (req, res) => {
 
 }
 
+
 // Atualiza um usuário pelo id
 exports.updatePrefs = async (req, res) => {
   const rating_up = req.body.rating_up;
@@ -94,21 +93,36 @@ exports.updatePrefs = async (req, res) => {
   const user_id = req.params.id;
 
   try {
+    // Recebe notícia do banco de dados a partir do id e cria Map com frenquência dos termos
     const news = await News.findById(news_id).exec();
     const { docVectors } = createCorpusDictionaryAndVectorizeDocs(processNewsArray([news]));
-    console.log(docVectors[0]);
     
+    // Recebe dados do usuário logado para atualizar
     const user = await User.findById(user_id).exec();
 
     if (rating_up) {
-      // @TODO: Somar valores de chaves repetidas ao concatenar
-      user.liked_terms = new Map([...user.liked_terms].concat([...docVectors[0]]));
-      console.log(user.liked_terms);
+      /* Caso o usuário tenha dado like na notícia, primeiro checa se o usuário previamente
+       * deu dislike na notícia e remove da lista de notícias com dislike antes de atualizar
+       * a lista de notícias com like. Caso contrário, atualiza lista de notícias com likes. */
+      if (user.disliked_news.includes(news_id)) {
+        user.disliked_news = updateNewsIdArrayAndTerms(news_id, user.disliked_news, user.disliked_terms, docVectors[0]);
+      }
+      user.liked_news = updateNewsIdArrayAndTerms(news_id, user.liked_news, user.liked_terms, docVectors[0]);
     } else {
-      console.log(user.disliked_terms);
+      /* Caso o usuário tenha dado dislike na notícia, primeiro checa se o usuário previamente
+       * deu like na notícia e remove da lista de notícias com like antes de atualizar
+       * a lista de notícias com dislike. Caso contrário, atualiza lista de notícias com dislikes. */
+      if (user.liked_news.includes(news_id)) {
+        user.liked_news = updateNewsIdArrayAndTerms(news_id, user.liked_news, user.liked_terms, docVectors[0]);
+      }
+      user.disliked_news = updateNewsIdArrayAndTerms(news_id, user.disliked_news, user.disliked_terms, docVectors[0]);
     }
+    console.log("Termos das novas gostadas", user.liked_terms);
+    console.log("Novas gostadas", user.liked_news);
+    console.log("Termos das novas nao gostadas", user.disliked_terms);
+    console.log("Novas nao gostadas", user.disliked_news);
     user.save()
-    res.status(200).send();
+    res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ erro: err });
   }
