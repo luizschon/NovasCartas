@@ -57,7 +57,7 @@ exports.autoLoginUser = async (req, res) => {
   try {
     const token = req.body.token;
     const decodedUser = jwt.verify(token, "secret");
-    res.status(200).json(decodedUser);
+    res.status(200).json(await User.findById(decodedUser._id));
   } catch (err) {
     res.status(400).json({ err: "erro" });
   }
@@ -84,7 +84,6 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
 
 }
-
 
 // Atualiza um usuário pelo id
 exports.updatePrefs = async (req, res) => {
@@ -117,10 +116,6 @@ exports.updatePrefs = async (req, res) => {
       }
       user.disliked_news = updateNewsIdArrayAndTerms(news_id, user.disliked_news, user.disliked_terms, docVectors[0]);
     }
-    console.log("Termos das novas gostadas", user.liked_terms);
-    console.log("Novas gostadas", user.liked_news);
-    console.log("Termos das novas nao gostadas", user.disliked_terms);
-    console.log("Novas nao gostadas", user.disliked_news);
     user.save()
     res.status(200).json(user);
   } catch (err) {
