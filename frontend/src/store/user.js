@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
-import { createUser, autoLoginUser, loginUser } from '../api/user';
+import { createUser, autoLoginUser, loginUser, updateUserPrefs } from '../api/user';
 
 export const useUser = defineStore('user', {
   state: () => (
@@ -26,6 +26,8 @@ export const useUser = defineStore('user', {
       } catch (err) {
         throw "Erro ao registrar"
       }
+
+
     },
     async autoLogin() {
       try {
@@ -58,6 +60,14 @@ export const useUser = defineStore('user', {
       this.user = null
       this.isAuthenticated = false
       this.token = ""
+    },
+    async updatePrefs(newsId, ratingUp) {
+      try {
+        const res = await updateUserPrefs(this.user._id, newsId, ratingUp);
+        this.user = res.data;
+      } catch (err) {
+        throw "Erro ao atualizar preferencias do usuario"
+      }
     }
   }
 })
