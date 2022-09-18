@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+
 const UserRouter = require('./routes/user.routes.js');
 const NewsRouter = require('./routes/news.routes.js');
 const JobsRouter = require('./jobs/saveNews.js');
