@@ -142,10 +142,11 @@ function cosSimArrayCompare (obj0, obj1) {
     return obj1[0] - obj0[0];
 }
 
-async function getRankingForQuery (queryVectorPos, queryVectorNeg) {
-    let news = await getNews('https://feeds.bbci.co.uk/portuguese/rss.xml');
-
-    let docList = processNewsArray(news);
+function getRankingForQuery (newsArray, queryVectorPos, queryVectorNeg) {
+    // console.log("newsArray ", newsArray)
+    // console.log("queryVectorPos ", queryVectorPos)
+    // console.log("queryVectorNeg ", queryVectorNeg)
+    let docList = processNewsArray(newsArray);
     corpusObject = createCorpusDictionaryAndVectorizeDocs(docList);
     cosSimArray = getCosSimForQuery(corpusObject, queryVectorPos, queryVectorNeg);
 
@@ -157,7 +158,7 @@ async function getRankingForQuery (queryVectorPos, queryVectorNeg) {
     let sortedNews = new Array();
     cosSimArray.forEach(
         (element) => {
-            sortedNews.push(news[element[1]]);
+            sortedNews.push(newsArray[element[1]]);
     });
     // console.log(sortedNews);
     return sortedNews;
