@@ -9,8 +9,15 @@
 
 const db = require("../models");
 const jwt = require("jsonwebtoken");
+const { updateNewsIdArrayAndTerms } = require('../utils/map');
 
 const User = db.users;
+const News = db.news;
+
+const {
+  createCorpusDictionaryAndVectorizeDocs,
+  processNewsArray
+} = require('../models/tf-idf')
 
 // Cria e salva um novo usuário
 exports.registerUser = async (req, res) => {
@@ -50,7 +57,7 @@ exports.autoLoginUser = async (req, res) => {
   try {
     const token = req.body.token;
     const decodedUser = jwt.verify(token, "secret");
-    res.status(200).json(decodedUser);
+    res.status(200).json(await User.findById(decodedUser._id));
   } catch (err) {
     res.status(400).json({ err: "erro" });
   }
@@ -79,8 +86,42 @@ exports.findOne = (req, res) => {
 }
 
 // Atualiza um usuário pelo id
-exports.update = (req, res) => {
+exports.updatePrefs = async (req, res) => {
+  const rating_up = req.body.rating_up;
+  const news_id = req.body.news_id;
+  const user_id = req.params.id;
 
+  try {
+    // Recebe notícia do banco de dados a partir do id e cria Map com frenquência dos termos
+    const news = await News.findById(news_id).exec();
+    const { docVectors } = createCorpusDictionaryAndVectorizeDocs(processNewsArray([news]));
+    
+    // Recebe dados do usuário logado para atualizar
+    const user = await User.findById(user_id).exec();
+
+    if (rating_up) {
+      /* Caso o usuário tenha dado like na notícia, primeiro checa se o usuário previamente
+       * deu dislike na notícia e remove da lista de notícias com dislike antes de atualizar
+       * a lista de notícias com like. Caso contrário, atualiza lista de notícias com likes. */
+      if (user.disliked_news.includes(news_id)) {
+        user.disliked_news = updateNewsIdArrayAndTerms(news_id, user.disliked_news, user.disliked_terms, docVectors[0]);
+      }
+      user.liked_news = updateNewsIdArrayAndTerms(news_id, user.liked_news, user.liked_terms, docVectors[0]);
+    } else {
+      /* Caso o usuário tenha dado dislike na notícia, primeiro checa se o usuário previamente
+       * deu like na notícia e remove da lista de notícias com like antes de atualizar
+       * a lista de notícias com dislike. Caso contrário, atualiza lista de notícias com dislikes. */
+      if (user.liked_news.includes(news_id)) {
+        user.liked_news = updateNewsIdArrayAndTerms(news_id, user.liked_news, user.liked_terms, docVectors[0]);
+      }
+      user.disliked_news = updateNewsIdArrayAndTerms(news_id, user.disliked_news, user.disliked_terms, docVectors[0]);
+    }
+    user.save()
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ erro: err });
+  }
+  
 }
 
 // Remove um usuário pelo id

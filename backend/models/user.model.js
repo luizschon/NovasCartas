@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 
 const UserSchema = mongoose.Schema({
-  name: {type: String, required: true, unique: true, dropDups: true},
+    name: {type: String, required: true, unique: true, dropDups: true},
     password: {type: String, required: true},
+    liked_terms: {type: Map, of: Number, default: new Map()},
+    disliked_terms: {type: Map, of: Number, default: new Map()},
+    liked_news: {type: [mongoose.ObjectId], default: []},
+    disliked_news: {type: [mongoose.ObjectId], default: []},
     tokens: [
       {
         token: {

@@ -6,11 +6,11 @@
     </div>
     <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
       <div class="rating-buttons">
-        <button id="rating-up" v-on:click="ratingUp(news._id)">
-          <span class="material-symbols-outlined">thumb_up</span>
+        <button id="rating-up" :class="{ active: store.user?.liked_news.includes(news._id) }" v-on:click="updateRating(news._id, true)">
+          <span class="material-symbols-outlined" ref="thumbUp">thumb_up</span>
         </button>
-        <button id="rating-down" v-on:click="click=ratingDown(news._id)">
-          <span class="material-symbols-outlined">thumb_down</span>
+        <button id="rating-down" :class="{ active: store.user?.disliked_news.includes(news._id) }" v-on:click="updateRating(news._id, false)">
+          <span class="material-symbols-outlined" ref="thumbDown">thumb_down</span>
         </button>
       </div>
       <div class="card-content">
@@ -24,18 +24,25 @@
 </template>
 
 <script>
+  import api from '../api/base'
+  import { useUser } from '../store/user'
   export default {
     name: "NewsCard",
+    setup() {
+      const store = useUser();
+      return { store };
+    },
     props: {
       news: null,
     },
     // Funcionamento dos botões definido aqui
     methods: {
-      ratingUp(id) {
-        console.log("RATING UP - ID:", id);
-      },
-      ratingDown(id) {
-        console.log("RATING DOWN - ID:", id);
+      async updateRating(id, ratingUp) {
+        try {
+          this.store.updatePrefs(id, ratingUp);
+        } catch (err) {
+          console.error("Erro ao atualizar rating: ", err);
+        }
       },
       showStatus(e) {
         const statusDiv = this.$refs.status;
@@ -86,6 +93,9 @@
     width: fit-content;
     height: fit-content;
   }
+  #rating-up.active {
+    color: rgb(24, 126, 221);
+  }
   #rating-up:hover {
     color: rgb(24, 126, 221);
   }
@@ -94,6 +104,9 @@
     height: fit-content;
   }
   #rating-down:hover {
+    color: rgb(235, 15, 15);
+  }
+  #rating-down.active {
     color: rgb(235, 15, 15);
   }
   #news-source {

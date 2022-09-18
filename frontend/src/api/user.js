@@ -12,3 +12,10 @@ export function autoLoginUser(token) {
     return api.post('/users/auto_login', { token: token });
 }
 
+export function updateUserPrefs(user_id, news_id, ratingUp) {
+    return api.patch('/users/' + user_id + '/prefs', {
+        news_id: news_id,
+        rating_up: ratingUp
+    });
+}
+
