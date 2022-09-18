@@ -6,10 +6,10 @@
     </div>
     <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
       <div class="rating-buttons">
-        <button id="rating-up" v-on:click="updateRating(news._id, true)">
+        <button id="rating-up" :class="{ active: store.user?.liked_news.includes(news._id) }" v-on:click="updateRating(news._id, true)">
           <span class="material-symbols-outlined" ref="thumbUp">thumb_up</span>
         </button>
-        <button id="rating-down" v-on:click="updateRating(news._id, false)">
+        <button id="rating-down" :class="{ active: store.user?.disliked_news.includes(news._id) }" v-on:click="updateRating(news._id, false)">
           <span class="material-symbols-outlined" ref="thumbDown">thumb_down</span>
         </button>
       </div>
@@ -23,63 +23,23 @@
   </div>
 </template>
 
-<script setup>
-import api from '../api/base'
-import { useUser } from '../store/user'
-</script>
-
 <script>
+  import api from '../api/base'
+  import { useUser } from '../store/user'
   export default {
     name: "NewsCard",
+    setup() {
+      const store = useUser();
+      return { store };
+    },
     props: {
       news: null,
-    },
-    data() {
-      return {
-        // Dummy
-        isLiked: false,
-        isDisliked: false,
-      };
     },
     // Funcionamento dos botões definido aqui
     methods: {
       async updateRating(id, ratingUp) {
-        console.log("RATING CHANGED - ID:", id);
-        console.log("RATING CHANGED - PREF:", ratingUp);
         try {
-          // const res = await api.patch('/users/' + useUser().user._id + '/prefs', { news_id: this.news._id, rating_up: ratingUp });
-          // console.log("RES", res.data);
-          
-          // Usuário apertou like
-          if (ratingUp) {
-            // Retira like se a notícia já estiver com like
-            if (this.isLiked) {
-              this.$refs.thumbUp.style.setProperty('color', 'inherit');
-              this.isLiked = false;
-
-            // Dá like se a notícia não estiver
-            } else {
-              this.$refs.thumbUp.style.setProperty('color', 'rgb(24, 126, 221)');
-              this.isLiked = true;
-            }
-
-            // @TODO Retira dislike se a notícia estiver 
-          }
-
-          // Usuário apertou dislike
-          if (!ratingUp) {
-            // Retira dislike se a notícia já estiver com dislike
-            if (this.isDisliked) {
-              this.$refs.thumbDown.style.setProperty('color', 'inherit');
-              this.isDisliked = false;
-
-            // Dá dislike se a notícia não estiver
-            } else {
-              this.$refs.thumbDown.style.setProperty('color', 'rgb(235, 15, 15)');
-              this.isDisliked = true;
-            }
-          }
-
+          this.store.updatePrefs(id, ratingUp);
         } catch (err) {
           console.error("Erro ao atualizar rating: ", err);
         }
@@ -133,6 +93,9 @@ import { useUser } from '../store/user'
     width: fit-content;
     height: fit-content;
   }
+  #rating-up.active {
+    color: rgb(24, 126, 221);
+  }
   #rating-up:hover {
     color: rgb(24, 126, 221);
   }
@@ -141,6 +104,9 @@ import { useUser } from '../store/user'
     height: fit-content;
   }
   #rating-down:hover {
+    color: rgb(235, 15, 15);
+  }
+  #rating-down.active {
     color: rgb(235, 15, 15);
   }
   #news-source {
