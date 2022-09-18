@@ -1,5 +1,5 @@
 <template>
-  <div id="news-grid" ref="newsGrid">
+  <div id="news-grid" v-if="newsList" ref="newsGrid">
     <NewsCard v-for="news in newsList" :key="news._id" :news="news" />
   </div>
   <div v-if="currentPage === null">
@@ -7,13 +7,19 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import NewsCard from '../components/NewsCard.vue';
 import { getNews } from '../api/news.js';
-</script>
+import { useUser } from '../store/user.js';
 
-<script>
 export default {
+  components: {
+    NewsCard
+  },
+  setup() {
+    const store = useUser();
+    return { store };
+  },
   data() {
     return {
       newsList: [],
@@ -21,33 +27,27 @@ export default {
       isLoading: false,
     }
   },
+  watch: {
+    'store.user'() {
+      if (this.store.user) {
+        this.loadNews(this.store.user._id);
+      }
+    }
+  },
   // Exemplo de uso das funções da api
   async mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.loadNextPage();
+    this.loadNews();
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
-    async loadNextPage() {
-      if (this.currentPage === null) return;
+    async loadNews(userId = null) {
       try {
-        const res = await getNews(this.currentPage);
-        this.newsList = this.newsList.concat(res.data.news);
-        this.currentPage = res.data.next_page;
+        const res = await getNews(userId);
+        this.newsList = res.data;
       } catch (err) {
         console.error(err);    // Deu errado
-      }
-      this.isLoading = false;
-    },
-    handleScroll(e) {
-      if (this.isLoading) return;
-
-      let el = this.$refs.newsGrid.getBoundingClientRect();
-      if (el.bottom <= window.innerHeight) {
-        this.isLoading = true;
-        this.loadNextPage();
       }
     },
     scrollToTop() {
