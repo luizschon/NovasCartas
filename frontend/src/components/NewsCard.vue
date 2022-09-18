@@ -5,13 +5,15 @@
       <div class="status-rating">RATING: {{ news.rating }}</div>
     </div>
     <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
-      <div class="rating-buttons">
-        <button id="rating-up" :class="{ active: store.user?.liked_news.includes(news._id) }" v-on:click="updateRating(news._id, true)">
-          <span class="material-symbols-outlined" ref="thumbUp">thumb_up</span>
-        </button>
-        <button id="rating-down" :class="{ active: store.user?.disliked_news.includes(news._id) }" v-on:click="updateRating(news._id, false)">
-          <span class="material-symbols-outlined" ref="thumbDown">thumb_down</span>
-        </button>
+      <div class="buttons-container">
+        <div class="rating-buttons" v-if="store.user">
+          <button id="rating-up" :class="{ active: store.user?.liked_news.includes(news._id) }" v-on:click="updateRating(news._id, true)">
+            <span class="material-symbols-outlined" ref="thumbUp">thumb_up</span>
+          </button>
+          <button id="rating-down" :class="{ active: store.user?.disliked_news.includes(news._id) }" v-on:click="updateRating(news._id, false)">
+            <span class="material-symbols-outlined" ref="thumbDown">thumb_down</span>
+          </button>
+        </div>
       </div>
       <div class="card-content">
         <a target="_blank" :href=news.url><h2>{{ news.title }}</h2></a>
@@ -78,16 +80,21 @@
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    margin: 10px 30px 30px;
+    margin: 15px 30px 30px;
   }
   .date {
     font-style: italic;
+  }
+  .buttons-container {
+    display: flex;
+    align-self: flex-end;
+    padding: 15px 15px 0px;
+    min-height: 1rem;
   }
   .rating-buttons {
     display: flex;
     align-self: flex-end;
     gap: 10px;
-    padding: 15px 15px 0px;
   }
   #rating-up {
     width: fit-content;
