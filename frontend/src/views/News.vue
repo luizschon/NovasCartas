@@ -1,6 +1,7 @@
 <template>
+  <input type="text" v-model="pesquisa">
   <div id="news-grid" ref="newsGrid">
-    <NewsCard v-for="news in newsList" :key="news._id" :news="news" />
+    <NewsCard v-for="news in newsPesquisa" :key="news._id" :news="news" />
   </div>
   <div v-if="currentPage === null">
     <div id="bottom-div" @click="scrollToTop">Go to top</div>
@@ -19,6 +20,12 @@ export default {
       newsList: [],
       currentPage: 1,
       isLoading: false,
+      pesquisa: '',
+    }
+  },
+  computed: {
+    newsPesquisa() {
+      return this.newsList.filter(news => news.title.toLowerCase().includes(this.pesquisa.toLowerCase()));
     }
   },
   // Exemplo de uso das funções da api
