@@ -1,6 +1,5 @@
 node_modules
 log
 .vercel
-
-# Python cache
 __pycache__
+.env

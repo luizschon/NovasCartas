@@ -1,0 +1,4 @@
+cron:
+- description: "salva novas notícias no bd"
+  url: /jobs/save_news
+  schedule: every 15 minutes

@@ -1,6 +1,6 @@
 import api from './base'
 
-export function getNews() {
-    return api.get('/news');
+export function getNews(pageNumber) {
+    return api.get('/news?page=' + pageNumber);
 }
 

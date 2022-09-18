@@ -14,6 +14,8 @@
 
   --background-color-primary: #2b2b2b;
   --background-color-secondary: #131313;
+  --background-color-tertiary: #5c5c5c;
+  --font-color-primary: rgba(255, 255, 255, 0.87);
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -25,6 +27,7 @@
   margin: 0px;
   padding: 0px;
   user-select: none;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -42,19 +45,6 @@ h1 {
 
 #app {
   width: 100vw;
-  margin: 0 auto;
+  min-height: 100vh;
   text-align: center;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

@@ -1,11 +1,15 @@
 <template>
   <div class="card-container">
-    <div class="card" v-if="news">
+    <div ref="status" class="status-container">
+      <div class="status-id">ID: {{ news._id }}</div>
+      <div class="status-rating">RATING: {{ news.rating }}</div>
+    </div>
+    <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
       <div class="rating-buttons">
-        <button id="rating-up" v-on:click="ratingUp(news.id)">
+        <button id="rating-up" v-on:click="ratingUp(news._id)">
           <span class="material-symbols-outlined">thumb_up</span>
         </button>
-        <button id="rating-down" v-on:click="click=ratingDown(news.id)">
+        <button id="rating-down" v-on:click="click=ratingDown(news._id)">
           <span class="material-symbols-outlined">thumb_down</span>
         </button>
       </div>
@@ -33,6 +37,14 @@
       ratingDown(id) {
         console.log("RATING DOWN - ID:", id);
       },
+      showStatus(e) {
+        const statusDiv = this.$refs.status;
+        statusDiv.style.setProperty('visibility', 'visible');
+      },
+      hideStatus(e) {
+        const statusDiv = this.$refs.status;
+        statusDiv.style.setProperty('visibility', 'hidden');
+      }
     }
   };
 </script>
@@ -40,6 +52,10 @@
 <style scoped>
   .card-container {
     height: fit-content;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    break-inside: avoid;
+    margin-bottom: 20px;
   }
   .card {
     display: flex;
@@ -83,6 +99,26 @@
   #news-source {
     width: fit-content;
     padding: 0 0.5rem;
+    margin: auto;
+  }
+  .status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: black;
+    background-color: #dedede;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 8px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 2rem;
+    visibility: hidden;
+    min-width: fit-content;
+    z-index: 2;
   }
   a {
     text-decoration: none;
