@@ -2,7 +2,6 @@
   <div class="card-container">
     <div ref="status" class="status-container">
       <div class="status-id">ID: {{ news._id }}</div>
-      <div class="status-rating">RATING: {{ news.rating }}</div>
     </div>
     <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
       <div class="buttons-container">
@@ -26,7 +25,6 @@
 </template>
 
 <script>
-  import api from '../api/base'
   import { useUser } from '../store/user'
   export default {
     name: "NewsCard",

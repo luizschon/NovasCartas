@@ -1,34 +1,21 @@
-const { News } = require("../models/news.model.js");
+const db = require("../models");
+const News = db.news;
+const User = db.users;
+const { getRankingForQuery } = require("../models/tf-idf");
 
 // Retorna todas as notícias paginadas 
-const getNews = (req, res) => {
-  const page = req.query.page || req.body.page || 1;
-  const pageSize = 20;
-
-  const options = {
-    page: page,
-    limit: pageSize,
-    sort: 'title' // TODO: criar um sort para ranking por cosine-diff
-  };
-
+const getNews = async (req, res) => {
+  const user_id = req.query.user_id;
   // Pagina resulados da query
-  News.paginate(
-    { createdOn: { $lte: req.createdOnBefore } },
-    options,
-    (err, result) => {
-      if (err) {
-        res.status(500).json({ message: err.message });
-      } else {
-        res.status(200).json({
-          news: result.docs,
-          page: result.page,
-          total_pages: result.totalPages,
-          next_page: result.nextPage,
-          prev_page: result.prevPage
-        });
-      }
-    }
-  );
+  const unsorted_news = await News.find({});
+
+  if (user_id) {
+    const user = await User.findById(user_id).exec();
+    const sorted_news = getRankingForQuery(unsorted_news, user.liked_terms, user.disliked_terms);
+    res.status(200).json(sorted_news);
+  } else {
+    res.status(200).json(unsorted_news);
+  }
 }
 
 // Função que deleta todas as notícias do db
