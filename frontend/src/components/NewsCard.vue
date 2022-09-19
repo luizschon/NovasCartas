@@ -1,13 +1,18 @@
 <template>
   <div class="card-container">
-    <div class="card" v-if="news">
-      <div class="rating-buttons">
-        <button id="rating-up" v-on:click="ratingUp(news.id)">
-          <span class="material-symbols-outlined">thumb_up</span>
-        </button>
-        <button id="rating-down" v-on:click="click=ratingDown(news.id)">
-          <span class="material-symbols-outlined">thumb_down</span>
-        </button>
+    <div ref="status" class="status-container">
+      <div class="status-id">ID: {{ news._id }}</div>
+    </div>
+    <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
+      <div class="buttons-container">
+        <div class="rating-buttons" v-if="store.user">
+          <button id="rating-up" :class="{ active: store.user?.liked_news.includes(news._id) }" v-on:click="updateRating(news._id, true)">
+            <span class="material-symbols-outlined" ref="thumbUp">thumb_up</span>
+          </button>
+          <button id="rating-down" :class="{ active: store.user?.disliked_news.includes(news._id) }" v-on:click="updateRating(news._id, false)">
+            <span class="material-symbols-outlined" ref="thumbDown">thumb_down</span>
+          </button>
+        </div>
       </div>
       <div class="card-content">
         <a target="_blank" :href=news.url><h2>{{ news.title }}</h2></a>
@@ -20,19 +25,33 @@
 </template>
 
 <script>
+  import { useUser } from '../store/user'
   export default {
     name: "NewsCard",
+    setup() {
+      const store = useUser();
+      return { store };
+    },
     props: {
       news: null,
     },
     // Funcionamento dos botões definido aqui
     methods: {
-      ratingUp(id) {
-        console.log("RATING UP - ID:", id);
+      async updateRating(id, ratingUp) {
+        try {
+          this.store.updatePrefs(id, ratingUp);
+        } catch (err) {
+          console.error("Erro ao atualizar rating: ", err);
+        }
       },
-      ratingDown(id) {
-        console.log("RATING DOWN - ID:", id);
+      showStatus(e) {
+        const statusDiv = this.$refs.status;
+        statusDiv.style.setProperty('visibility', 'visible');
       },
+      hideStatus(e) {
+        const statusDiv = this.$refs.status;
+        statusDiv.style.setProperty('visibility', 'hidden');
+      }
     }
   };
 </script>
@@ -40,6 +59,10 @@
 <style scoped>
   .card-container {
     height: fit-content;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    break-inside: avoid;
+    margin-bottom: 20px;
   }
   .card {
     display: flex;
@@ -55,20 +78,28 @@
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    margin: 10px 30px 30px;
+    margin: 15px 30px 30px;
   }
   .date {
     font-style: italic;
+  }
+  .buttons-container {
+    display: flex;
+    align-self: flex-end;
+    padding: 15px 15px 0px;
+    min-height: 1rem;
   }
   .rating-buttons {
     display: flex;
     align-self: flex-end;
     gap: 10px;
-    padding: 15px 15px 0px;
   }
   #rating-up {
     width: fit-content;
     height: fit-content;
+  }
+  #rating-up.active {
+    color: rgb(24, 126, 221);
   }
   #rating-up:hover {
     color: rgb(24, 126, 221);
@@ -80,9 +111,32 @@
   #rating-down:hover {
     color: rgb(235, 15, 15);
   }
+  #rating-down.active {
+    color: rgb(235, 15, 15);
+  }
   #news-source {
     width: fit-content;
     padding: 0 0.5rem;
+    margin: auto;
+  }
+  .status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: black;
+    background-color: #dedede;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 8px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 2rem;
+    visibility: hidden;
+    min-width: fit-content;
+    z-index: 2;
   }
   a {
     text-decoration: none;
