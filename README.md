@@ -6,7 +6,8 @@ Projeto final da disciplina de Projeto e Análise de Algoritmo (PAA-2022/1) da U
 - Alexsander Correa de Oliveira – mat **190023562**
 - Fernanda Macedo de Sousa – mat **170010058**
 - Gustavo Tomás de Paula – mat **190014148**
-- Jonas Soares Rnagel – mat **170146804**
+- Jonas Soares Rangel – mat **170146804**
+- Lucas Junior Ribas - mat **160052289**
 - Luiz Carlos Schonarth Junior – mat **190055171**
 - Marco Antônio Athayde – mat **180126814**
 - Mateus de Paula Rodrigues – mat **190017953**
