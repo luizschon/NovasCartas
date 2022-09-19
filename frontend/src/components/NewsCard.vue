@@ -1,7 +1,10 @@
 <template>
   <div class="card-container">
-    <div ref="status" class="status-container">
-      <div class="status-id">ID: {{ news._id }}</div>
+    <div ref="status" v-show="showStatus" class="status-container">
+      <div class="status-id">
+        <span>ID: {{ news._id }}</span><br/>
+        <span v-if="news.score">SCORE: {{ news.score }}</span>
+      </div>
     </div>
     <div class="card" v-if="news" @mouseenter="showStatus" @mouseleave="hideStatus">
       <div class="buttons-container">

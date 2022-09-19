@@ -143,9 +143,6 @@ function cosSimArrayCompare (obj0, obj1) {
 }
 
 function getRankingForQuery (newsArray, queryVectorPos, queryVectorNeg) {
-    // console.log("newsArray ", newsArray)
-    // console.log("queryVectorPos ", queryVectorPos)
-    // console.log("queryVectorNeg ", queryVectorNeg)
     let docList = processNewsArray(newsArray);
     corpusObject = createCorpusDictionaryAndVectorizeDocs(docList);
     cosSimArray = getCosSimForQuery(corpusObject, queryVectorPos, queryVectorNeg);
@@ -158,57 +155,13 @@ function getRankingForQuery (newsArray, queryVectorPos, queryVectorNeg) {
     let sortedNews = new Array();
     cosSimArray.forEach(
         (element) => {
-            sortedNews.push(newsArray[element[1]]);
+            sortedNews.push({
+                ...newsArray[element[1]]._doc,
+                score: element[0]
+            });
     });
-    // console.log(sortedNews);
     return sortedNews;
 }
-
-// Testes.
-
-// let queryVectorP = new Map([
-//     ["tênis", 2],
-//     ["cinema", 1]
-// ]);
-//
-// let queryVectorN = new Map([
-//     ["bolsonaro", 2],
-//     ["eleições", 1],
-//     ["eleição", 1],
-//     ["lula", 1],
-//     ["ucrânia", 3],
-//     ["rainha", 1]
-// ]);
-//
-// let output = getRankingForQuery(queryVectorP, queryVectorN);
-// output.then(
-//     (value) => {
-//         console.log(value);
-//     }
-// );
-
-
-// Apagar depois
-// output.then((value)=>{console.log(value);});
-
-// map = new Map([
-//     ["one", 3],
-//     ["two", 5]
-// ]);
-
-// map.set('three', 1);
-
-
-// let documents = [
-//     ["the", "sky", "is", "blue"],
-//     ["the", "sun", "is", "bright"],
-//     ["the", "sun", "in", "the", "sky", "is", "bright"],
-//     ["we", "can", "see", "the", "shining", "sun", "the", "bright", "sun"]
-//     ];
-
-// result = createCorpusDictionaryAndVectorizeDocs(output);
-// console.log(result);
-
 
 module.exports = {
     processNewsArray,
