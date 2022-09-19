@@ -11,11 +11,11 @@ router.get("/save_news", async (req, res) => {
 
   shouldStop = false;
 
-  News.insertMany(allNews, (err) => {
+  News.insertMany(allNews, (err, news) => {
     if (err) shouldStop = true;
+    res.status(200).json(news);
   });
 
-  res.status(200).send();
 })
 
 module.exports = router;
